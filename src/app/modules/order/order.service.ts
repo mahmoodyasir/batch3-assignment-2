@@ -2,9 +2,8 @@ import { Response } from "express";
 import { TOrder } from "./order.interface";
 import { Order } from "./order.model";
 import { Product } from "../product/product.model";
-import { TProduct } from "../product/product.interface";
 
-const createOrderIntoDB = async (orderData: TOrder, res: Response) => {
+const createOrderIntoDB = async (orderData: TOrder) => {
 
     const quantity = orderData.quantity
 
@@ -42,7 +41,20 @@ const createOrderIntoDB = async (orderData: TOrder, res: Response) => {
 }
 
 
+const getOrderFromDB = async () => {
+    const result = await Order.find();
+    return result;
+}
+
+
+const getOrderByUser = async (email: string) => {
+
+    const result = await Order.find({ email });
+    return result;
+}
 
 export const OrderServices = {
     createOrderIntoDB,
+    getOrderFromDB,
+    getOrderByUser,
 }

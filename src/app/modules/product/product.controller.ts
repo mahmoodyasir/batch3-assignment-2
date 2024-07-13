@@ -60,7 +60,7 @@ const getProduct = async (req: Request, res: Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || req.query.searchTerm ? 'Could not search' :'Products couldn not be fetched',
+            message: err.message || req.query.searchTerm ? 'Could not search' :'Products could not be fetched',
             error: err,
         });
     }
