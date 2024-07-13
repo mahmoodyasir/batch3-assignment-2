@@ -13,6 +13,14 @@ app.use('/api/products', ProductRoutes);
 app.use('/api/orders', OrderRoutes);
 
 
+app.get('/', (req: Request, res: Response) => {
+    res.status(200).json({
+        success: true,
+        message: 'Project is running successfully'
+    });
+});
+
+
 //This is used for throwing error for unknown routes
 
 app.use((req: Request, res: Response) => {
