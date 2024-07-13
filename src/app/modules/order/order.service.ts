@@ -13,7 +13,7 @@ const createOrderIntoDB = async (orderData: TOrder) => {
         const finalQuantity = productData.inventory.quantity - quantity
 
         if (finalQuantity < 0) {
-
+            // Here returning 0 to throw Insufficient quantity error in controller 
             return 0;
 
         }
