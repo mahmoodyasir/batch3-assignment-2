@@ -29,6 +29,7 @@ const createProduct = async (req: Request, res: Response) => {
 const getProduct = async (req: Request, res: Response) => {
     try {
 
+        //This if condition part is used for searching by keywords if searchTerm is in query params
         if (req.query.searchTerm) {
             const searchTerm = req.query.searchTerm?.toString().toLowerCase();
 
