@@ -95,9 +95,39 @@ const updateProductById = async (req: Request, res: Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'Products couldn not be updated',
+            message: err.message || 'Products could not be updated',
             error: err,
         });
+    }
+}
+
+
+const deleteProductById = async (req: Request, res: Response) => {
+    try {
+        const productId = req.params.productId;
+
+        const result = await ProductServices.deleteSingleProductById(productId);
+
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Product deleted successfully!',
+            data: null,
+        });
+
+    }
+    catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.message || 'product could not be deleted',
+            error: err,
+        })
     }
 }
 
@@ -107,4 +137,5 @@ export const ProductController = {
     getProduct,
     getProductById,
     updateProductById,
+    deleteProductById,
 }
