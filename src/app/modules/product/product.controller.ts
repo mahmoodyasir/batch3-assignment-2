@@ -28,6 +28,26 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getProduct = async (req: Request, res: Response) => {
     try {
+
+        if (req.query.searchTerm) {
+            const searchTerm = req.query.searchTerm?.toString().toLowerCase();
+
+            if (!searchTerm) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'SearchTerm query value is required',
+                });
+            }
+
+            const result = await ProductServices.searchProductByKey(searchTerm);
+
+            return res.status(200).json({
+                success: true,
+                message: `Products matching search term '${searchTerm}' fetched successfully!`,
+                data: result,
+            });
+        }
+
         const result = await ProductServices.getProductFromDB();
 
         res.status(200).json({
@@ -39,7 +59,7 @@ const getProduct = async (req: Request, res: Response) => {
     catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'Products couldn not be fetched',
+            message: err.message || req.query.searchTerm ? 'Could not search' :'Products couldn not be fetched',
             error: err,
         });
     }

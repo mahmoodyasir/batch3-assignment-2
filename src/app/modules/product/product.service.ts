@@ -31,10 +31,26 @@ const deleteSingleProductById = async (productId: string) => {
     return result;
 }
 
+const searchProductByKey = async (searchTerm: string) => {
+
+    const regex = new RegExp(searchTerm, 'i');
+
+    const result = await Product.find({
+        $or: [
+            { name: regex },
+            { description: regex },
+            { tags: { $elemMatch: { $regex: searchTerm, $options: 'i' } } }
+        ]
+    });
+
+    return result;
+}
+
 export const ProductServices = {
     createProductIntoDB,
     getProductFromDB,
     getProductById,
     updateSingleProductById,
     deleteSingleProductById,
+    searchProductByKey,
 }
